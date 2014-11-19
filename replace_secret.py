@@ -67,8 +67,8 @@ if len(sys.argv) < 2:
 filePath = sys.argv[1]
 
 import re
-rx = re.compile(r'''(\s*SECRET_KEY\s*=\s*["'])(.*)(["'])''')
+rx = re.compile(r'''(\s*SECRET_KEY\s*=\s*)(["'])(.*)(\2)''')
 
 key = generate_key(50)
 for line in fileinput.input(filePath, inplace=True):
-    sys.stdout.write(rx.sub(r'\g<1>%s\g<3>'%key, line))
+    sys.stdout.write(rx.sub(r'\g<1>\g<2>%s\g<2>'%key, line))
